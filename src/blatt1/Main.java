@@ -10,7 +10,7 @@ import knapsack.Reader;
 import knapsack.SolverInterface;
 
 public class Main {
-	public static boolean debug = true;
+	public static boolean debug = false;
 	
 	private static final String usage = "Usage: [-v|--verbose] <filename>";
 
