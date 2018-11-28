@@ -2,6 +2,7 @@ package blatt1;
 
 import java.io.IOException;
 
+import knapsack.BinarySimAnneal1;
 import knapsack.BinarySolver;
 import knapsack.GenericSolution;
 import knapsack.Instance;
@@ -10,7 +11,7 @@ import knapsack.Reader;
 import knapsack.SolverInterface;
 
 public class Main {
-	public static boolean debug = false;
+	public static boolean debug = true;
 	
 	private static final String usage = "Usage: [-v|--verbose] <filename>";
 
@@ -58,7 +59,7 @@ public class Main {
 			System.out.println("# Capacity of knapsack: " + instance.getCapacity());
 			System.out.println("###############################################");
 			System.out.println();
-			runSolver(new BinarySolver(),instance,true);
+			runSolver(new BinarySimAnneal1(),instance,true);
 			break;
 		default:
 			throw new IllegalArgumentException(usage);
@@ -71,7 +72,7 @@ public class Main {
 		args[0] = "-v";
 		
 		String folder = "/Users/nbaumgartner/Documents/GitHub/Uni-KO/bin/blatt1/assets/";
-		String problem = "rucksack0004.txt";
+		String problem = "rucksack0050.txt";
 		
 		args[1] = folder+problem;
 
