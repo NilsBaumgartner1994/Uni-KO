@@ -53,6 +53,7 @@ public class BinarySimAnneal1 implements SolverInterface<Solution> {
 
 	@Override
 	public Solution solve(Instance instance) {
+		
 		this.instance = instance;
 
 		setVariables(); // setzt die art der sim annealing
