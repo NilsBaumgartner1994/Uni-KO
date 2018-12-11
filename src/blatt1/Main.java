@@ -2,6 +2,7 @@ package blatt1;
 
 import java.io.IOException;
 
+import knapsack.BinaryGeneric;
 import knapsack.BinarySimAnneal1;
 import knapsack.BinarySolver;
 import knapsack.BinaryTabuList;
@@ -60,7 +61,7 @@ public class Main {
 			System.out.println("# Capacity of knapsack: " + instance.getCapacity());
 			System.out.println("###############################################");
 			System.out.println();
-			runSolver(new BinaryTabuList(),instance,true);
+			runSolver(new BinaryGeneric(),instance,true);
 			break;
 		default:
 			throw new IllegalArgumentException(usage);
