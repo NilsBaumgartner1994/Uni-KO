@@ -15,9 +15,13 @@ public class BinaryGenericSolutionPopulation implements Comparator<BinaryGeneric
 	List<BinaryGenericSolution> population;
 	BinaryGenericConfiguration config;
 
+	/**
+	 * Constructor einer Population
+	 * @param config
+	 */
 	public BinaryGenericSolutionPopulation(BinaryGenericConfiguration config) {
 		this.config = config;
-		this.population = new LinkedList<BinaryGenericSolution>();
+		this.population = new LinkedList<BinaryGenericSolution>(); //einfache Liste
 	}
 
 	/**
@@ -31,12 +35,15 @@ public class BinaryGenericSolutionPopulation implements Comparator<BinaryGeneric
 	 */
 	public void addToPopulation(BinaryGenericSolution child) {
 		sort();
-		if(isPopulationSizeReached()){
-			population.remove(population.size() - 1);
+		if(isPopulationSizeReached()){ //wenn grenze erreicht
+			population.remove(population.size() - 1); //lösche schwächsten
 		}
-		this.population.add(child);
+		this.population.add(child); //füge kind hinzu
 	}
 
+	/**
+	 * Sortiert die Population nach der Fitness
+	 */
 	private void sort() {
 		Collections.sort(population, this);
 	}
@@ -47,15 +54,23 @@ public class BinaryGenericSolutionPopulation implements Comparator<BinaryGeneric
 //		}
 //	}
 	
+	/**
+	 * Ist die angegebene Grenze der Population erreicht
+	 * @return
+	 */
 	private boolean isPopulationSizeReached(){
 		return config.populationSize.getValue() <= population.size();
 	}
 
+	/**
+	 * Wähle ein Element aus nach der Eltern Configuration aus
+	 * @return
+	 */
 	public BinaryGenericSolution getMotherOrFather() {
 		switch (config.parentSelection) {
-		case FITNESS:
+		case FITNESS: //nach fitness
 			return BinaryGenericConfiguration.PARENTSELECTION.getFittest(population);
-		case RANDOM:
+		case RANDOM: //oder zufällig
 			return BinaryGenericConfiguration.PARENTSELECTION.getRandom(population);
 		default:
 			return BinaryGenericConfiguration.PARENTSELECTION.getRandom(population);

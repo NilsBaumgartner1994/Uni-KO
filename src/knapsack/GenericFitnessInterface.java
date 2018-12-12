@@ -12,5 +12,5 @@ import java.util.List;
  */
 public interface GenericFitnessInterface {
 
-	public Integer getFitness();
+	public Integer getFitness(); //jedes Element soll eine Fitness besitzen
 }

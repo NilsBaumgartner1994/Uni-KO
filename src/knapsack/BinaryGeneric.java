@@ -13,13 +13,18 @@ import knapsack.BinaryGenericConfiguration.POPSIZE;
  */
 public class BinaryGeneric implements SolverInterface<Solution> {
 
+	/**
+	 * Einstellen der Configuration
+	 * Weitere Parameter in der Entsprechenden Klasse ändern und einstellen
+	 * @return
+	 */
 	public BinaryGenericConfiguration getConfig() {
 		BinaryGenericConfiguration config = new BinaryGenericConfiguration();
 		config.setIteration(ITERATIONS.ALOT);
 		config.setPopulationSize(POPSIZE.ALOT);
 		config.setMutationCance(MUTATIONCHANCE.HIGH);
 		
-		config.setMutationType(CROSSOVER.ONEPOINTCROSSOVER);
+		config.setCrossoverType(CROSSOVER.ONEPOINTCROSSOVER);
 		config.setParentSelection(PARENTSELECTION.FITNESS);
 		return config;
 	}
@@ -30,10 +35,15 @@ public class BinaryGeneric implements SolverInterface<Solution> {
 		return pop.population.get(0).solution;
 	}
 	
+	/**
+	 * Statet den Generischen Algoritmus
+	 * @param instance
+	 * @return
+	 */
 	public BinaryGenericSolutionPopulation genericAlg(Instance instance) {
-		BinaryGenericConfiguration config = getConfig();
-		int iteration = 0;
-		BinaryGenericSolutionPopulation pop = new BinaryGenericSolutionPopulation(config);
+		BinaryGenericConfiguration config = getConfig(); //hole einstellungen
+		int iteration = 0; //iterationen reset
+		BinaryGenericSolutionPopulation pop = new BinaryGenericSolutionPopulation(config); //erstelle Pop Klasse
 		
 		// 1. Generiere eine initiale Population POP;	
 		generateInitPopulation(instance, pop);
@@ -47,7 +57,7 @@ public class BinaryGeneric implements SolverInterface<Solution> {
 			BinaryGenericSolution father = pop.getMotherOrFather();
 
 			// 5. Generiere eine Kind-L ̈osung sC von sM, sF durch Crossover;
-			BinaryGenericSolution child = config.mutationType.crossOver(mother, father);
+			BinaryGenericSolution child = config.crossoverType.crossOver(mother, father);
 			//System.out.println(child.solution.toString());
 
 			// 6. Mutiere sC mit einer bestimmten Wahrscheinlichkeit;
@@ -82,11 +92,11 @@ public class BinaryGeneric implements SolverInterface<Solution> {
 	 * @param pop
 	 */
 	public static void generateInitPopulation(Instance instance, BinaryGenericSolutionPopulation pop){
-		for(int i=0; i<instance.getSize(); i++){
+		for(int i=0; i<instance.getSize(); i++){ //für alle Variablen
 			Solution s = new Solution(instance);
-			s.set(i, 1);
-			if(s.isFeasible()){
-				pop.addToPopulation(new BinaryGenericSolution(s));
+			s.set(i, 1); // erstelle Lösung mit auswahl des Bits
+			if(s.isFeasible()){ //wenn erlaubt
+				pop.addToPopulation(new BinaryGenericSolution(s)); //füge der Pop hinzu
 			}
 		}
 	}

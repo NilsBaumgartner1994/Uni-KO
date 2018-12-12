@@ -11,10 +11,17 @@ public class BinaryGenericSolution implements GenericFitnessInterface{
 	
 	Solution solution;
 
+	/**
+	 * Erstelle Generische Lösung als eigene Klasse mit Solution
+	 * @param solution
+	 */
 	public BinaryGenericSolution(Solution solution) {
 		this.solution = solution;
 	}
 	
+	/**
+	 * Berechnung der Fitness nach Value einer Lösung
+	 */
 	public Integer getFitness(){
 		return this.solution.getValue();
 	}

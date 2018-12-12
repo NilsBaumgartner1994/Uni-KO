@@ -14,35 +14,58 @@ public class BinaryGenericConfiguration {
 
 	public ITERATIONS maxIterations; // 2 diff max iterations
 	public POPSIZE populationSize; // 2 diff pop size
-	public MUTATIONCHANCE mutationConf;
-	public CROSSOVER mutationType;
-	public PARENTSELECTION parentSelection;
+	public MUTATIONCHANCE mutationConf; //2 diff mutation chance
+	public CROSSOVER crossoverType; //crossovertype
+	public PARENTSELECTION parentSelection; //ausawhl der eltern
 
+	/**
+	 * Default einstellungen
+	 */
 	public BinaryGenericConfiguration() {
 		rand = new Random();
 		setIteration(ITERATIONS.ALOT);
 		setPopulationSize(POPSIZE.ALOT);
-		setMutationType(CROSSOVER.ONEPOINTCROSSOVER);
+		setCrossoverType(CROSSOVER.ONEPOINTCROSSOVER);
 		setMutationCance(MUTATIONCHANCE.LOW);
 		setParentSelection(PARENTSELECTION.FITNESS);
 	}
 
+	/**
+	 * Setter für ElternAuswahl
+	 * @param parentSelection
+	 */
 	public void setParentSelection(PARENTSELECTION parentSelection) {
 		this.parentSelection = parentSelection;
 	}
 
+	/**
+	 * Setter für Max Iterationen
+	 * @param maxIterations
+	 */
 	public void setIteration(ITERATIONS maxIterations) {
 		this.maxIterations = maxIterations;
 	}
 
+	/**
+	 * Setter für Max Iterationen
+	 * @param populationSize
+	 */
 	public void setPopulationSize(POPSIZE populationSize) {
 		this.populationSize = populationSize;
 	}
 
-	public void setMutationType(CROSSOVER mutationType) {
-		this.mutationType = mutationType;
+	/**
+	 * Set Crossover Type
+	 * @param crossoverType
+	 */
+	public void setCrossoverType(CROSSOVER crossoverType) {
+		this.crossoverType = crossoverType;
 	}
 
+	/**
+	 * Set MutationChance
+	 * @param mutationConf
+	 */
 	public void setMutationCance(MUTATIONCHANCE mutationConf) {
 		this.mutationConf = mutationConf;
 	}
@@ -51,20 +74,27 @@ public class BinaryGenericConfiguration {
 	public enum PARENTSELECTION {
 		RANDOM, FITNESS;
 
+		/**
+		 * Random selection
+		 * @return
+		 */
 		public static <T extends GenericFitnessInterface> T getRandom(List<T> items) {
 			return items.get(rand.nextInt(items.size()));
 		}
 
+		/**
+		 * Selection of Fittest in pop after script
+		 */
 		public static <T extends GenericFitnessInterface> T getFittest(List<T> items) {
 			int maxFitness = 0;
 			for (T item : items) {
-				maxFitness += item.getFitness();
+				maxFitness += item.getFitness(); //berechne max fitness
 			}
 
 			int chance = rand.nextInt(maxFitness);
-			T selected = items.get(0);
+			T selected = items.get(0); //standart wahl, falls was schief geht
 
-			for (T item : items) {
+			for (T item : items) { //wähle Element nach größe seiner Fitness zufällig
 				chance -= item.getFitness();
 				if (chance < 0) {
 					return item;
@@ -80,14 +110,21 @@ public class BinaryGenericConfiguration {
 		
 		private final float value;
 		
+		/**
+		 * Lässt eine Solution Mutieren nach bestimmer wahrsch.
+		 */
 		public void mutate(BinaryGenericSolution sol){
 			float chance = rand.nextFloat();
-			if(chance-this.getValue()<0){
-				int item = rand.nextInt(sol.solution.instance.getSize());
-				sol.solution.set(item, (sol.solution.get(item)+1)%2);
+			if(chance-this.getValue()<0){ //wenn mutiert werden soll
+				int item = rand.nextInt(sol.solution.instance.getSize()); //zufälliges item
+				sol.solution.set(item, (sol.solution.get(item)+1)%2); //flip
 			}
 		}
 
+		/**
+		 * Constructor für Mutationschance
+		 * @param newValue
+		 */
 		MUTATIONCHANCE(final float newValue) {
 			value = newValue;
 		}
@@ -102,6 +139,10 @@ public class BinaryGenericConfiguration {
 
 		private final int value;
 
+		/**
+		 * Constructor für MaxIterations
+		 * @param newValue
+		 */
 		ITERATIONS(final int newValue) {
 			value = newValue;
 		}
@@ -116,6 +157,9 @@ public class BinaryGenericConfiguration {
 
 		private final int value;
 
+		/**
+		 * Constructor für Populationsize
+		 */
 		POPSIZE(final int newValue) {
 			value = newValue;
 		}
@@ -128,19 +172,31 @@ public class BinaryGenericConfiguration {
 	public enum CROSSOVER {
 		ONEPOINTCROSSOVER;
 
+		/**
+		 * Crossover von Father und Mutter nach gegebenem CrossoverTyp
+		 * @param mother
+		 * @param father
+		 * @return
+		 */
 		public BinaryGenericSolution crossOver(BinaryGenericSolution mother, BinaryGenericSolution father) {
-			switch(this){
-			case ONEPOINTCROSSOVER:
+			switch(this){ //es gibt nur eine implementierung
+			case ONEPOINTCROSSOVER: 
 				return onePointCrossOver(mother,father);
 			default:
 				return onePointCrossOver(mother,father);
 			}
 		}
 
+		/**
+		 * One-Point-Crossover nach Script
+		 * @param mother
+		 * @param father
+		 * @return
+		 */
 		public BinaryGenericSolution onePointCrossOver(BinaryGenericSolution mother, BinaryGenericSolution father) {
 			int motherGenes = rand.nextInt(mother.solution.instance.getSize());
 			Solution child = new Solution(father.solution);
-			for(int i=0; i<motherGenes; i++){
+			for(int i=0; i<motherGenes; i++){ //motherGenes anzahl zufällige hintereinanderliegende Gene ans Kind weiter geben
 				child.set(i, mother.solution.get(i));
 			}
 			
