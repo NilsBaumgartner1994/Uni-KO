@@ -16,8 +16,8 @@ public class AntAlgorythm {
 
 	List<Ant> ants;
 
-	public final int MAXANTS = 100; //maximale Ameisen
-	public final int MAXITERATIONS = 1000; //maximale Iterationen
+	public final int MAXANTS = 50; //maximale Ameisen
+	public final int MAXITERATIONS = 300; //maximale Iterationen
 
 	public final float VERDUNSTFAKTOR = 0.1f; //verdunstungsfaktor
 
@@ -42,6 +42,7 @@ public class AntAlgorythm {
 			world.verdunsten(VERDUNSTFAKTOR); //lass feromone verdunsten
 			for (Ant ant : ants) { //für alle Ameisen
 				float tourLength = ant.calcTourLength(); //berechne strecke
+				System.out.println(tourLength);
 				if (tourLength < world.bestTourLength) { //wenn neue kürzeste Strecke
 					world.bestAnt = ant; //merke diese
 					world.bestTourLength = tourLength;

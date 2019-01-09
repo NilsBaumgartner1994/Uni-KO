@@ -14,7 +14,7 @@ public class Ant {
 
 	static Random r = new Random();
 
-	public final float ALPHA = 1f; // pheromoneinfluss
+	public final float ALPHA = 0.5f; // pheromoneinfluss
 	public final float BETA = 0.5f; // heuristik einfluss
 
 	TSPSolution world; // die Welt

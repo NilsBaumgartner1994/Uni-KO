@@ -42,6 +42,15 @@ public class Main {
 			args = getArguments();
 		}
 
+		String weis = "\033[0m";
+		String rot = "\033[31m";
+		
+		for(int i=0; i<rot.length(); i++){
+			System.out.println(rot.charAt(i));
+		}
+		
+		
+		
 		switch (args.length) {
 		case 2:
 			if (args[0].equals("-v") || args[0].equals("--verbose")) {
@@ -74,7 +83,7 @@ public class Main {
 		args[0] = "-v";
 		
 		String folder = "/Users/nbaumgartner/Documents/GitHub/Uni-KO/src/blatt8/assets/";
-		String problem = "tsp1.txt";
+		String problem = "tsp3.txt";
 		
 		args[1] = folder+problem;
 
