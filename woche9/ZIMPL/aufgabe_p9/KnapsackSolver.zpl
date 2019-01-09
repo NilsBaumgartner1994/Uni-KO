@@ -12,8 +12,8 @@ set N := {1 .. n};
 
 # Parsen der Datei
 var items[N] binary; # Erstelle N items
-param value[N] := read file as "1n" skip 1 use n; # Setze Nutzen der Items
-param weight[N] := read file as "2n" skip 1 use n; # Setze Gewicht der Items
+param weight[N] := read file as "1n" skip 1 use n; # Setze Gewicht der Items
+param value[N] := read file as "2n" skip 1 use n; # Setze Nutzen der Items
 
 # Zielfunktion, mitnahme von allen N items mit deren Nutzen
 maximize rucksack: sum <j> in N : items[j] * value[j];

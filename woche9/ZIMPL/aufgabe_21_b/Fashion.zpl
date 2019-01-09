@@ -27,7 +27,7 @@ var rockAnz integer >= 0;
 var hosenAnz integer >= 0;
 
 # Maximale Produktions Anzahl (anpassbar)
-param maxAnzahlProdukte := 99999999;
+param maxAnzahlProdukte := 99; # Mehr Items koennen nie erstellt werden
 
 # Variable ob eine Maschine angeschafft wird
 var hemdenMaschineVorhanden integer >= 0 <= 1;
@@ -39,13 +39,13 @@ maximize money: (hemdenAnz * gewinnProHemd) + (rockAnz * gewinnProRock) + (hosen
 # Erstelle Abhaengigkeit, dass Produkte nur mit entsprechender Maschine hergestellt werden koennen
 subto maximaleHemden: hemdenAnz <= hemdenMaschineVorhanden * maxAnzahlProdukte;
 subto maximaleRoecke: rockAnz <= hosenRockMaschineVorhanden * maxAnzahlProdukte;
-subto maximaleHosen: hosenAnz <= hosenRockMaschineVorhanden * maxAnzahlProdukte;
+subto maximaleHosen: hosenAnz <= hemdenMaschineVorhanden * maxAnzahlProdukte;
 
 
 # Mindeststueckanzahl von b)
-subto minimaleRoecke: rockAnz >= 35 * hosenRockMaschineVorhanden;
-subto minimaleHosen: hosenAnz >= 35 * hosenRockMaschineVorhanden;
+subto minimaleRoecke: rockAnz >= gewinnProRock * hosenRockMaschineVorhanden;
+subto minimaleHosen: hosenAnz >= gewinnProHose * hosenRockMaschineVorhanden;
 
 # Resourcen Limitierung
-subto arbeitsstunden: (hemdenAnz * stundenProHemd) + (rockAnz * stundenProRock) + (hosenAnz * stundenProHose) <= maxArbeitsstunden;
-subto material: (hemdenAnz * materialProHemd) + (rockAnz * materialProRock) + (hosenAnz * materialProHose) <= maxMaterial;
+subto arbeitsstunden: (hemdenAnz * stundenProHemd) + (rockAnz * stundenProRock) + (hosenAnz * stundenProHose) <= maxMaterial;
+subto material: (hemdenAnz * materialProHemd) + (rockAnz * materialProRock) + (hosenAnz * materialProHose) <= maxArbeitsstunden;
